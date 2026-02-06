@@ -41,13 +41,17 @@ export async function getInventoryValueReport(superCategoryId?: string) {
       0
     );
     const totalValue = totalStock * Number(item.unitCost);
-    const superCategory = resolveSuperCategory(item.category);
+    const superCategory = item.category
+      ? resolveSuperCategory(item.category)
+      : "Uncategorized";
 
     return {
       id: item.id,
       name: item.name,
-      category: categoryBreadcrumb(item.category),
-      categoryColor: item.category.color,
+      category: item.category
+        ? categoryBreadcrumb(item.category)
+        : "Uncategorized",
+      categoryColor: item.category?.color ?? null,
       superCategory,
       unit: item.unit,
       unitCost: Number(item.unitCost),
@@ -95,6 +99,7 @@ export async function getWasteReport(days: number = 30, superCategoryId?: string
         if (!superCat) return logs;
         return logs.filter(
           (log) =>
+            log.inventoryItem.category &&
             resolveSuperCategory(log.inventoryItem.category) === superCat.name
         );
       })()
@@ -113,7 +118,9 @@ export async function getWasteReport(days: number = 30, superCategoryId?: string
   // Group by category (breadcrumb)
   const byCategory: Record<string, { count: number; cost: number }> = {};
   for (const log of filteredLogs) {
-    const cat = categoryBreadcrumb(log.inventoryItem.category);
+    const cat = log.inventoryItem.category
+      ? categoryBreadcrumb(log.inventoryItem.category)
+      : "Uncategorized";
     if (!byCategory[cat]) {
       byCategory[cat] = { count: 0, cost: 0 };
     }
@@ -124,7 +131,9 @@ export async function getWasteReport(days: number = 30, superCategoryId?: string
   // Group by super category
   const bySuperCategory: Record<string, { count: number; cost: number }> = {};
   for (const log of filteredLogs) {
-    const superCat = resolveSuperCategory(log.inventoryItem.category);
+    const superCat = log.inventoryItem.category
+      ? resolveSuperCategory(log.inventoryItem.category)
+      : "Uncategorized";
     if (!bySuperCategory[superCat]) {
       bySuperCategory[superCat] = { count: 0, cost: 0 };
     }

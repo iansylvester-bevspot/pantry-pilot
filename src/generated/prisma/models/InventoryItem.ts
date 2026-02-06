@@ -280,7 +280,7 @@ export type InventoryItemGroupByOutputType = {
   name: string
   sku: string | null
   description: string | null
-  categoryId: string
+  categoryId: string | null
   unit: $Enums.UnitType
   unitCost: runtime.Decimal
   parLevel: runtime.Decimal
@@ -325,7 +325,7 @@ export type InventoryItemWhereInput = {
   name?: Prisma.StringFilter<"InventoryItem"> | string
   sku?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
-  categoryId?: Prisma.StringFilter<"InventoryItem"> | string
+  categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -340,7 +340,7 @@ export type InventoryItemWhereInput = {
   locationId?: Prisma.StringFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   stockLevels?: Prisma.StockLevelListRelationFilter
   supplierItems?: Prisma.SupplierItemListRelationFilter
@@ -354,7 +354,7 @@ export type InventoryItemOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
@@ -387,7 +387,7 @@ export type InventoryItemWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.InventoryItemWhereInput | Prisma.InventoryItemWhereInput[]
   name?: Prisma.StringFilter<"InventoryItem"> | string
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
-  categoryId?: Prisma.StringFilter<"InventoryItem"> | string
+  categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -401,7 +401,7 @@ export type InventoryItemWhereUniqueInput = Prisma.AtLeast<{
   locationId?: Prisma.StringFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
-  category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
+  category?: Prisma.XOR<Prisma.CategoryNullableScalarRelationFilter, Prisma.CategoryWhereInput> | null
   location?: Prisma.XOR<Prisma.LocationScalarRelationFilter, Prisma.LocationWhereInput>
   stockLevels?: Prisma.StockLevelListRelationFilter
   supplierItems?: Prisma.SupplierItemListRelationFilter
@@ -415,7 +415,7 @@ export type InventoryItemOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  categoryId?: Prisma.SortOrder
+  categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
@@ -445,7 +445,7 @@ export type InventoryItemScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"InventoryItem"> | string
   sku?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
-  categoryId?: Prisma.StringWithAggregatesFilter<"InventoryItem"> | string
+  categoryId?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeWithAggregatesFilter<"InventoryItem"> | $Enums.UnitType
   unitCost?: Prisma.DecimalWithAggregatesFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalWithAggregatesFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -480,7 +480,7 @@ export type InventoryItemCreateInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
@@ -494,7 +494,7 @@ export type InventoryItemUncheckedCreateInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -534,7 +534,7 @@ export type InventoryItemUpdateInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
@@ -548,7 +548,7 @@ export type InventoryItemUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -575,7 +575,7 @@ export type InventoryItemCreateManyInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -617,7 +617,7 @@ export type InventoryItemUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -921,7 +921,7 @@ export type InventoryItemCreateWithoutLocationInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
   orderLines?: Prisma.PurchaseOrderLineCreateNestedManyWithoutInventoryItemInput
@@ -934,7 +934,7 @@ export type InventoryItemUncheckedCreateWithoutLocationInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -989,7 +989,7 @@ export type InventoryItemScalarWhereInput = {
   name?: Prisma.StringFilter<"InventoryItem"> | string
   sku?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
-  categoryId?: Prisma.StringFilter<"InventoryItem"> | string
+  categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1102,7 +1102,7 @@ export type InventoryItemCreateWithoutStockLevelsInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
   orderLines?: Prisma.PurchaseOrderLineCreateNestedManyWithoutInventoryItemInput
@@ -1115,7 +1115,7 @@ export type InventoryItemUncheckedCreateWithoutStockLevelsInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1170,7 +1170,7 @@ export type InventoryItemUpdateWithoutStockLevelsInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
   orderLines?: Prisma.PurchaseOrderLineUpdateManyWithoutInventoryItemNestedInput
@@ -1183,7 +1183,7 @@ export type InventoryItemUncheckedUpdateWithoutStockLevelsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1222,7 +1222,7 @@ export type InventoryItemCreateWithoutSupplierItemsInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   orderLines?: Prisma.PurchaseOrderLineCreateNestedManyWithoutInventoryItemInput
@@ -1235,7 +1235,7 @@ export type InventoryItemUncheckedCreateWithoutSupplierItemsInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1290,7 +1290,7 @@ export type InventoryItemUpdateWithoutSupplierItemsInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   orderLines?: Prisma.PurchaseOrderLineUpdateManyWithoutInventoryItemNestedInput
@@ -1303,7 +1303,7 @@ export type InventoryItemUncheckedUpdateWithoutSupplierItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1342,7 +1342,7 @@ export type InventoryItemCreateWithoutOrderLinesInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
@@ -1355,7 +1355,7 @@ export type InventoryItemUncheckedCreateWithoutOrderLinesInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1410,7 +1410,7 @@ export type InventoryItemUpdateWithoutOrderLinesInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
@@ -1423,7 +1423,7 @@ export type InventoryItemUncheckedUpdateWithoutOrderLinesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1462,7 +1462,7 @@ export type InventoryItemCreateWithoutWasteLogsInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
@@ -1475,7 +1475,7 @@ export type InventoryItemUncheckedCreateWithoutWasteLogsInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1530,7 +1530,7 @@ export type InventoryItemUpdateWithoutWasteLogsInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
@@ -1543,7 +1543,7 @@ export type InventoryItemUncheckedUpdateWithoutWasteLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1582,7 +1582,7 @@ export type InventoryItemCreateWithoutPriceHistoryInput = {
   glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  category: Prisma.CategoryCreateNestedOneWithoutItemsInput
+  category?: Prisma.CategoryCreateNestedOneWithoutItemsInput
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
   stockLevels?: Prisma.StockLevelCreateNestedManyWithoutInventoryItemInput
   supplierItems?: Prisma.SupplierItemCreateNestedManyWithoutInventoryItemInput
@@ -1595,7 +1595,7 @@ export type InventoryItemUncheckedCreateWithoutPriceHistoryInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1650,7 +1650,7 @@ export type InventoryItemUpdateWithoutPriceHistoryInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
@@ -1663,7 +1663,7 @@ export type InventoryItemUncheckedUpdateWithoutPriceHistoryInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1689,7 +1689,7 @@ export type InventoryItemCreateManyLocationInput = {
   name: string
   sku?: string | null
   description?: string | null
-  categoryId: string
+  categoryId?: string | null
   unit?: $Enums.UnitType
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1723,7 +1723,7 @@ export type InventoryItemUpdateWithoutLocationInput = {
   glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
+  category?: Prisma.CategoryUpdateOneWithoutItemsNestedInput
   stockLevels?: Prisma.StockLevelUpdateManyWithoutInventoryItemNestedInput
   supplierItems?: Prisma.SupplierItemUpdateManyWithoutInventoryItemNestedInput
   orderLines?: Prisma.PurchaseOrderLineUpdateManyWithoutInventoryItemNestedInput
@@ -1736,7 +1736,7 @@ export type InventoryItemUncheckedUpdateWithoutLocationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1762,7 +1762,7 @@ export type InventoryItemUncheckedUpdateManyWithoutLocationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -1959,7 +1959,7 @@ export type InventoryItemSelect<ExtArgs extends runtime.Types.Extensions.Interna
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   stockLevels?: boolean | Prisma.InventoryItem$stockLevelsArgs<ExtArgs>
   supplierItems?: boolean | Prisma.InventoryItem$supplierItemsArgs<ExtArgs>
@@ -1989,7 +1989,7 @@ export type InventoryItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryItem"]>
 
@@ -2013,7 +2013,7 @@ export type InventoryItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["inventoryItem"]>
 
@@ -2041,7 +2041,7 @@ export type InventoryItemSelectScalar = {
 
 export type InventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "description" | "categoryId" | "unit" | "unitCost" | "parLevel" | "maxLevel" | "isActive" | "imageUrl" | "barcode" | "storageTemp" | "shelfLifeDays" | "notes" | "glCode" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryItem"]>
 export type InventoryItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
   stockLevels?: boolean | Prisma.InventoryItem$stockLevelsArgs<ExtArgs>
   supplierItems?: boolean | Prisma.InventoryItem$supplierItemsArgs<ExtArgs>
@@ -2051,18 +2051,18 @@ export type InventoryItemInclude<ExtArgs extends runtime.Types.Extensions.Intern
   _count?: boolean | Prisma.InventoryItemCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InventoryItemIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }
 export type InventoryItemIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
+  category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
 }
 
 export type $InventoryItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "InventoryItem"
   objects: {
-    category: Prisma.$CategoryPayload<ExtArgs>
+    category: Prisma.$CategoryPayload<ExtArgs> | null
     location: Prisma.$LocationPayload<ExtArgs>
     stockLevels: Prisma.$StockLevelPayload<ExtArgs>[]
     supplierItems: Prisma.$SupplierItemPayload<ExtArgs>[]
@@ -2075,7 +2075,7 @@ export type $InventoryItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     name: string
     sku: string | null
     description: string | null
-    categoryId: string
+    categoryId: string | null
     unit: $Enums.UnitType
     unitCost: runtime.Decimal
     parLevel: runtime.Decimal
@@ -2484,7 +2484,7 @@ readonly fields: InventoryItemFieldRefs;
  */
 export interface Prisma__InventoryItemClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  category<T extends Prisma.InventoryItem$categoryArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryItem$categoryArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   location<T extends Prisma.LocationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LocationDefaultArgs<ExtArgs>>): Prisma.Prisma__LocationClient<runtime.Types.Result.GetResult<Prisma.$LocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   stockLevels<T extends Prisma.InventoryItem$stockLevelsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryItem$stockLevelsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StockLevelPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supplierItems<T extends Prisma.InventoryItem$supplierItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.InventoryItem$supplierItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupplierItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -2932,6 +2932,25 @@ export type InventoryItemDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many InventoryItems to delete.
    */
   limit?: number
+}
+
+/**
+ * InventoryItem.category
+ */
+export type InventoryItem$categoryArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Category
+   */
+  select?: Prisma.CategorySelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Category
+   */
+  omit?: Prisma.CategoryOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryInclude<ExtArgs> | null
+  where?: Prisma.CategoryWhereInput
 }
 
 /**

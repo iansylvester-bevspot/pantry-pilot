@@ -68,13 +68,19 @@ export default async function InventoryItemPage({
             <CardTitle className="text-sm font-medium">Category</CardTitle>
           </CardHeader>
           <CardContent>
-            <CategoryBreadcrumb category={item.category} />
-            <div className="mt-2 flex items-center gap-2">
-              <GlCodeBadge
-                itemGlCode={item.glCode}
-                category={item.category}
-              />
-            </div>
+            {item.category ? (
+              <>
+                <CategoryBreadcrumb category={item.category} />
+                <div className="mt-2 flex items-center gap-2">
+                  <GlCodeBadge
+                    itemGlCode={item.glCode}
+                    category={item.category}
+                  />
+                </div>
+              </>
+            ) : (
+              <p className="text-sm text-muted-foreground">Uncategorized</p>
+            )}
             <div className="mt-2 text-sm text-muted-foreground">
               Par: {Number(item.parLevel)} | Max: {item.maxLevel ? Number(item.maxLevel) : "—"}
             </div>

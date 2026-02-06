@@ -33,7 +33,7 @@ interface InventoryItem {
     name: string;
     color: string | null;
     parent?: { name: string; parent?: { name: string } | null } | null;
-  };
+  } | null;
   stockLevels: { quantity: { toString(): string } | number; locationId: string }[];
 }
 
@@ -84,6 +84,13 @@ export default function InventoryTable({ items }: { items: InventoryItem[] }) {
       header: "Category",
       cell: ({ row }) => {
         const cat = row.original.category;
+        if (!cat) {
+          return (
+            <Badge variant="outline" className="text-muted-foreground">
+              Uncategorized
+            </Badge>
+          );
+        }
         const label = cat.parent
           ? `${cat.parent.name} > ${cat.name}`
           : cat.name;

@@ -53,13 +53,15 @@ export async function getDashboardStats() {
     lowStockItems: lowStockItems.map((item) => ({
       id: item.id,
       name: item.name,
-      category: [
-        item.category.parent?.parent?.name,
-        item.category.parent?.name,
-        item.category.name,
-      ]
-        .filter(Boolean)
-        .join(" > "),
+      category: item.category
+        ? [
+            item.category.parent?.parent?.name,
+            item.category.parent?.name,
+            item.category.name,
+          ]
+            .filter(Boolean)
+            .join(" > ")
+        : "Uncategorized",
       totalStock: item.stockLevels.reduce((sum, sl) => sum + Number(sl.quantity), 0),
       parLevel: Number(item.parLevel),
       unit: item.unit,

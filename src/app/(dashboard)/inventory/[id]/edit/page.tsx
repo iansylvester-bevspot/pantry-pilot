@@ -33,7 +33,7 @@ export default async function EditInventoryItemPage({
           name: item.name,
           sku: item.sku,
           description: item.description,
-          categoryId: item.categoryId,
+          categoryId: item.categoryId ?? "",
           unit: item.unit,
           unitCost: Number(item.unitCost),
           parLevel: Number(item.parLevel),

@@ -269,39 +269,90 @@ export async function updateCategory(
   }
 }
 
-export async function deleteCategory(id: string): Promise<ActionResult> {
+export async function deleteCategory(
+  id: string,
+  options?: {
+    reassignChildrenTo?: string;
+    reassignItemsTo?: string;
+    force?: boolean;
+  }
+): Promise<ActionResult> {
   try {
     await requireRole(["ADMIN", "MANAGER"]);
 
-    // Check for children
     const childCount = await prisma.category.count({
       where: { parentId: id },
     });
-    if (childCount > 0) {
-      return {
-        success: false,
-        error: `Cannot delete: ${childCount} child categor${childCount === 1 ? "y" : "ies"} exist under this category. Delete or reassign them first.`,
-      };
-    }
-
-    // Check for items
     const itemCount = await prisma.inventoryItem.count({
       where: { categoryId: id },
     });
-    if (itemCount > 0) {
-      return {
-        success: false,
-        error: `Cannot delete: ${itemCount} item(s) use this category. Reassign them first.`,
-      };
+
+    if (!options?.force) {
+      if (childCount > 0 && !options?.reassignChildrenTo) {
+        return {
+          success: false,
+          error: "Children must be reassigned before deleting",
+        };
+      }
+      if (itemCount > 0 && !options?.reassignItemsTo) {
+        return {
+          success: false,
+          error: "Items must be reassigned before deleting",
+        };
+      }
     }
 
-    await prisma.category.delete({ where: { id } });
+    await prisma.$transaction(async (tx) => {
+      if (options?.reassignChildrenTo) {
+        await tx.category.updateMany({
+          where: { parentId: id },
+          data: { parentId: options.reassignChildrenTo },
+        });
+      } else if (childCount > 0) {
+        // Force delete: recursively delete all descendants
+        await deleteDescendants(tx, id);
+      }
+
+      if (options?.reassignItemsTo) {
+        await tx.inventoryItem.updateMany({
+          where: { categoryId: id },
+          data: { categoryId: options.reassignItemsTo },
+        });
+      } else if (itemCount > 0) {
+        // Force delete: unassign items
+        await tx.inventoryItem.updateMany({
+          where: { categoryId: id },
+          data: { categoryId: null },
+        });
+      }
+
+      await tx.category.delete({ where: { id } });
+    });
 
     revalidatePath("/categories");
     revalidatePath("/inventory");
     return { success: true, data: undefined };
   } catch {
     return { success: false, error: "Failed to delete category" };
+  }
+}
+
+/** Recursively delete all descendant categories, unassigning their items */
+async function deleteDescendants(
+  tx: Parameters<Parameters<typeof prisma.$transaction>[0]>[0],
+  parentId: string
+) {
+  const children = await tx.category.findMany({
+    where: { parentId },
+    select: { id: true },
+  });
+  for (const child of children) {
+    await deleteDescendants(tx, child.id);
+    await tx.inventoryItem.updateMany({
+      where: { categoryId: child.id },
+      data: { categoryId: null },
+    });
+    await tx.category.delete({ where: { id: child.id } });
   }
 }
 

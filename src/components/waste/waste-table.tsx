@@ -28,7 +28,7 @@ interface WasteLog {
     id: string;
     name: string;
     unit: string;
-    category: { name: string; color: string | null };
+    category: { name: string; color: string | null } | null;
   };
   location: { name: string };
   loggedBy: { name: string | null; email: string };
@@ -57,17 +57,20 @@ const columns: ColumnDef<WasteLog>[] = [
   {
     id: "category",
     header: "Category",
-    cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        style={{
-          borderColor: row.original.inventoryItem.category.color ?? undefined,
-          color: row.original.inventoryItem.category.color ?? undefined,
-        }}
-      >
-        {row.original.inventoryItem.category.name}
-      </Badge>
-    ),
+    cell: ({ row }) => {
+      const cat = row.original.inventoryItem.category;
+      return (
+        <Badge
+          variant="outline"
+          style={{
+            borderColor: cat?.color ?? undefined,
+            color: cat?.color ?? undefined,
+          }}
+        >
+          {cat?.name ?? "Uncategorized"}
+        </Badge>
+      );
+    },
   },
   {
     id: "quantity",

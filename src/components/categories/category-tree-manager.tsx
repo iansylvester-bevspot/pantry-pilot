@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -18,11 +18,10 @@ import {
   Plus,
   Trash2,
 } from "lucide-react";
-import { toast } from "sonner";
-import { deleteCategory, type CategoryTreeNode } from "@/actions/categories";
+import { type CategoryTreeNode } from "@/actions/categories";
 import { CategoryFormDialog, type ParentOption } from "./category-form-dialog";
 import { BulkCreateDialog } from "./bulk-create-dialog";
-import ConfirmDialog from "@/components/shared/confirm-dialog";
+import { DeleteCategoryDialog } from "./delete-category-dialog";
 
 export function CategoryTreeManager({
   tree,
@@ -37,7 +36,6 @@ export function CategoryTreeManager({
   const [bulkOpen, setBulkOpen] = useState(false);
   const [bulkType, setBulkType] = useState<"SUPER" | "CATEGORY" | "SUBCATEGORY">("SUPER");
   const [bulkParentId, setBulkParentId] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
 
   // Separate assigned (SUPER with children) from unassigned (parentless non-SUPER)
   const superCategories = tree.filter((n) => n.type === "SUPER");
@@ -71,19 +69,6 @@ export function CategoryTreeManager({
     setFormType(node.type);
     setFormParentId(node.parentId);
     setFormOpen(true);
-  }
-
-  function handleDelete() {
-    if (!deleteTarget) return;
-    startTransition(async () => {
-      const result = await deleteCategory(deleteTarget.id);
-      if (result.success) {
-        toast.success("Category deleted");
-        setDeleteTarget(null);
-      } else {
-        toast.error(result.error);
-      }
-    });
   }
 
   return (
@@ -406,18 +391,11 @@ export function CategoryTreeManager({
       />
 
       {/* Delete confirm */}
-      <ConfirmDialog
+      <DeleteCategoryDialog
+        target={deleteTarget}
         open={!!deleteTarget}
         onOpenChange={(open) => !open && setDeleteTarget(null)}
-        title={`Delete ${deleteTarget?.name}?`}
-        description={
-          deleteTarget?._count.children
-            ? `This category has ${deleteTarget._count.children} child categories. You must reassign or delete them first.`
-            : deleteTarget?._count.items
-              ? `This category has ${deleteTarget._count.items} item(s). You must reassign them first.`
-              : "This action cannot be undone."
-        }
-        onConfirm={handleDelete}
+        parentOptions={parentOptions}
       />
     </div>
   );

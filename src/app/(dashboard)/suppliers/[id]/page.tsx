@@ -33,7 +33,7 @@ export default async function SupplierDetailPage({
     id: item.id,
     name: item.name,
     sku: item.sku,
-    category: { name: item.category.name },
+    category: { name: item.category?.name ?? "Uncategorized" },
   }));
 
   return (
@@ -180,11 +180,11 @@ export default async function SupplierDetailPage({
                       <Badge
                         variant="outline"
                         style={{
-                          borderColor: si.inventoryItem.category.color ?? undefined,
-                          color: si.inventoryItem.category.color ?? undefined,
+                          borderColor: si.inventoryItem.category?.color ?? undefined,
+                          color: si.inventoryItem.category?.color ?? undefined,
                         }}
                       >
-                        {si.inventoryItem.category.name}
+                        {si.inventoryItem.category?.name ?? "Uncategorized"}
                       </Badge>
                     </div>
                     <div className="mt-1 flex gap-4 text-sm text-muted-foreground">

@@ -8,7 +8,6 @@ import {
   ChevronLeft,
   X,
   Sparkles,
-  Lightbulb,
 } from "lucide-react";
 
 export type WizardStep = {
@@ -16,10 +15,11 @@ export type WizardStep = {
   title: string;
   description: string;
   hint?: string;
-  tips?: string[];
   icon?: React.ReactNode;
   /** If true, this step auto-advances when `isComplete` returns true */
   canAutoAdvance?: boolean;
+  /** If true, shows a "Skip" / "Not now" button to advance without completing */
+  optional?: boolean;
 };
 
 interface SetupWizardProps {
@@ -44,15 +44,38 @@ export function SetupWizard({
   const storageKey = `wizard_${wizardKey}_completed`;
   const [visible, setVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [skippedSteps, setSkippedSteps] = useState<Set<string>>(new Set());
 
   useEffect(() => {
+    // When force-showing (e.g. user deleted all data), clear any stale
+    // dismissal so the wizard stays visible as forceShow toggles off.
+    if (forceShow) {
+      localStorage.removeItem(storageKey);
+    }
     const dismissed = localStorage.getItem(storageKey) === "true";
     setVisible(forceShow || !dismissed);
   }, [forceShow, storageKey]);
 
+  // On mount, skip ahead past already-completed steps
+  useEffect(() => {
+    if (!isStepComplete) return;
+    let start = 0;
+    while (
+      start < steps.length - 1 &&
+      isStepComplete(steps[start].id) &&
+      steps[start].canAutoAdvance
+    ) {
+      start++;
+    }
+    if (start > 0) setCurrentStep(start);
+    // Only run on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Auto-advance when step is complete
   const step = steps[currentStep];
-  const stepComplete = step && isStepComplete?.(step.id);
+  const stepComplete =
+    step && (isStepComplete?.(step.id) || skippedSteps.has(step.id));
 
   const advance = useCallback(() => {
     if (currentStep < steps.length - 1) {
@@ -118,24 +141,6 @@ export function SetupWizard({
                 {step.hint}
               </p>
             )}
-            {step?.tips && step.tips.length > 0 && (
-              <div className="mt-3 rounded-md bg-background/60 border border-primary/10 p-3 space-y-2">
-                <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
-                  <Lightbulb className="h-3.5 w-3.5" />
-                  Tips
-                </div>
-                <ul className="space-y-1.5">
-                  {step.tips.map((tip, i) => (
-                    <li
-                      key={i}
-                      className="text-xs text-muted-foreground leading-relaxed pl-4 relative before:content-[''] before:absolute before:left-1 before:top-[7px] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground/40"
-                    >
-                      {tip}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
 
           {/* Dismiss */}
@@ -179,21 +184,35 @@ export function SetupWizard({
             ))}
           </div>
 
-          {isLast ? (
-            <Button size="sm" onClick={dismiss}>
-              Finish Setup
-            </Button>
-          ) : (
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={advance}
-              className="text-primary"
-            >
-              Next
-              <ChevronRight className="h-4 w-4 ml-1" />
-            </Button>
-          )}
+          <div className="flex gap-2">
+            {step?.optional && !stepComplete && !isLast && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() =>
+                  setSkippedSteps((s) => new Set(s).add(step.id))
+                }
+                className="text-muted-foreground"
+              >
+                Not now
+              </Button>
+            )}
+            {isLast ? (
+              <Button size="sm" onClick={dismiss}>
+                Finish Setup
+              </Button>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={advance}
+                className="text-primary"
+              >
+                {stepComplete ? "Continue" : "Next"}
+                <ChevronRight className="h-4 w-4 ml-1" />
+              </Button>
+            )}
+          </div>
         </div>
       </CardContent>
     </Card>

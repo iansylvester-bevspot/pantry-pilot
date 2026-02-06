@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { bulkCreateCategories } from "@/actions/categories";
 import type { CategoryType } from "@/generated/prisma/client";
 import type { ParentOption } from "./category-form-dialog";
+import { FormTipBubble } from "./form-tip-bubble";
 
 const TYPE_LABELS: Record<CategoryType, string> = {
   SUPER: "Super Categories",
@@ -107,13 +108,16 @@ export function BulkCreateDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md overflow-visible">
         <DialogHeader>
           <DialogTitle>Bulk Add {TYPE_LABELS[type]}</DialogTitle>
           <DialogDescription>
             Enter one name per line. Duplicates will be skipped.
           </DialogDescription>
         </DialogHeader>
+
+        <FormTipBubble type={type} />
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {requiredParentType && (
             <div className="space-y-2">

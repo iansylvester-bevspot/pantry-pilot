@@ -21,6 +21,7 @@ import {
 import { toast } from "sonner";
 import { createCategory, updateCategory } from "@/actions/categories";
 import type { CategoryType } from "@/generated/prisma/client";
+import { FormTipBubble } from "./form-tip-bubble";
 
 type CategoryFormData = {
   id?: string;
@@ -146,12 +147,15 @@ export function CategoryFormDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md overflow-visible">
         <DialogHeader>
           <DialogTitle>
             {isEditing ? "Edit" : "New"} {TYPE_LABELS[form.type]}
           </DialogTitle>
         </DialogHeader>
+
+        {!isEditing && <FormTipBubble type={form.type} />}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Type selector — shown when editing so user can reclassify */}
           {isEditing && (

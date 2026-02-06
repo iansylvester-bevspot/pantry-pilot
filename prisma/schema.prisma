@@ -204,7 +204,7 @@ model InventoryItem {
   name          String
   sku           String?  @unique
   description   String?
-  categoryId    String
+  categoryId    String?
   unit          UnitType @default(EACH)
   unitCost      Decimal  @default(0) @db.Decimal(10, 2)
   parLevel      Decimal  @default(0) @db.Decimal(10, 2)
@@ -220,7 +220,7 @@ model InventoryItem {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  category      Category            @relation(fields: [categoryId], references: [id])
+  category      Category?           @relation(fields: [categoryId], references: [id])
   location      Location            @relation(fields: [locationId], references: [id])
   stockLevels   StockLevel[]
   supplierItems SupplierItem[]
