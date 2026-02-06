@@ -28,7 +28,12 @@ interface InventoryItem {
   unitCost: { toString(): string } | number;
   parLevel: { toString(): string } | number;
   locationId: string;
-  category: { id: string; name: string; color: string | null };
+  category: {
+    id: string;
+    name: string;
+    color: string | null;
+    parent?: { name: string; parent?: { name: string } | null } | null;
+  };
   stockLevels: { quantity: { toString(): string } | number; locationId: string }[];
 }
 
@@ -77,17 +82,23 @@ export default function InventoryTable({ items }: { items: InventoryItem[] }) {
     {
       accessorKey: "category.name",
       header: "Category",
-      cell: ({ row }) => (
-        <Badge
-          variant="outline"
-          style={{
-            borderColor: row.original.category.color ?? undefined,
-            color: row.original.category.color ?? undefined,
-          }}
-        >
-          {row.original.category.name}
-        </Badge>
-      ),
+      cell: ({ row }) => {
+        const cat = row.original.category;
+        const label = cat.parent
+          ? `${cat.parent.name} > ${cat.name}`
+          : cat.name;
+        return (
+          <Badge
+            variant="outline"
+            style={{
+              borderColor: cat.color ?? undefined,
+              color: cat.color ?? undefined,
+            }}
+          >
+            {label}
+          </Badge>
+        );
+      },
     },
     {
       id: "stock",

@@ -10,7 +10,9 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -39,6 +41,8 @@ const UNIT_OPTIONS = [
 interface Category {
   id: string;
   name: string;
+  type: string;
+  parent?: { name: string; parent?: { name: string } | null } | null;
 }
 
 interface Location {
@@ -62,8 +66,42 @@ interface InventoryFormProps {
     storageTemp: string | null;
     shelfLifeDays: number | null;
     notes: string | null;
+    glCode: string | null;
     locationId: string;
   };
+}
+
+/** Group categories by their super category for the select dropdown */
+function groupCategories(categories: Category[]) {
+  const groups: Record<string, Category[]> = {};
+  const ungrouped: Category[] = [];
+
+  for (const cat of categories) {
+    // Find the super category name
+    let superName: string | null = null;
+    if (cat.parent?.parent) {
+      superName = cat.parent.parent.name; // subcategory → category → SUPER
+    } else if (cat.parent) {
+      superName = cat.parent.name; // category → SUPER
+    }
+
+    if (superName) {
+      if (!groups[superName]) groups[superName] = [];
+      groups[superName].push(cat);
+    } else {
+      ungrouped.push(cat);
+    }
+  }
+
+  return { groups, ungrouped };
+}
+
+/** Build display name for a category: "Parent > Name" for subcategories */
+function categoryLabel(cat: Category): string {
+  if (cat.type === "SUBCATEGORY" && cat.parent) {
+    return `${cat.parent.name} > ${cat.name}`;
+  }
+  return cat.name;
 }
 
 export default function InventoryForm({
@@ -75,6 +113,8 @@ export default function InventoryForm({
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const isEditing = !!item;
+
+  const { groups, ungrouped } = groupCategories(categories);
 
   async function handleSubmit(formData: FormData) {
     setError(null);
@@ -102,7 +142,7 @@ export default function InventoryForm({
             {locations.length === 0 && "You need to create at least one location before adding inventory items. "}
             Go to{" "}
             {categories.length === 0 && (
-              <a href="/inventory/categories" className="text-primary hover:underline">Categories</a>
+              <a href="/categories" className="text-primary hover:underline">Categories</a>
             )}
             {categories.length === 0 && locations.length === 0 && " and "}
             {locations.length === 0 && (
@@ -141,11 +181,28 @@ export default function InventoryForm({
                 <SelectValue placeholder="Select category" />
               </SelectTrigger>
               <SelectContent>
-                {categories.map((cat) => (
-                  <SelectItem key={cat.id} value={cat.id}>
-                    {cat.name}
-                  </SelectItem>
+                {Object.entries(groups).map(([superName, cats]) => (
+                  <SelectGroup key={superName}>
+                    <SelectLabel>{superName}</SelectLabel>
+                    {cats.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {categoryLabel(cat)}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
                 ))}
+                {ungrouped.length > 0 && (
+                  <SelectGroup>
+                    {Object.keys(groups).length > 0 && (
+                      <SelectLabel>Other</SelectLabel>
+                    )}
+                    {ungrouped.map((cat) => (
+                      <SelectItem key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )}
               </SelectContent>
             </Select>
           </div>
@@ -214,6 +271,15 @@ export default function InventoryForm({
               step="0.01"
               min="0"
               defaultValue={item?.maxLevel?.toString() ?? ""}
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="glCode">GL Code</Label>
+            <Input
+              id="glCode"
+              name="glCode"
+              defaultValue={item?.glCode ?? ""}
+              placeholder="Override category GL code"
             />
           </div>
           {!isEditing && (

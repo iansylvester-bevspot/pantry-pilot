@@ -1,11 +1,11 @@
-import { getCategories } from "@/actions/categories";
+import { getLeafCategories } from "@/actions/categories";
 import { getLocations } from "@/actions/locations";
 import PageHeader from "@/components/shared/page-header";
 import InventoryForm from "@/components/inventory/inventory-form";
 
 export default async function NewInventoryItemPage() {
   const [categories, locations] = await Promise.all([
-    getCategories(),
+    getLeafCategories(),
     getLocations(),
   ]);
 

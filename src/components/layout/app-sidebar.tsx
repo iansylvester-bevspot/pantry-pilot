@@ -17,6 +17,7 @@ import {
 import {
   LayoutDashboard,
   Package,
+  Tags,
   Truck,
   ClipboardList,
   Trash2,
@@ -28,6 +29,7 @@ import {
 const mainNav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "Inventory", href: "/inventory", icon: Package },
+  { title: "Categories", href: "/categories", icon: Tags },
   { title: "Suppliers", href: "/suppliers", icon: Truck },
   { title: "Orders", href: "/orders", icon: ClipboardList },
   { title: "Waste Log", href: "/waste", icon: Trash2 },

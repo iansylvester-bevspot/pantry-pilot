@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getInventoryItem } from "@/actions/inventory";
-import { getCategories } from "@/actions/categories";
+import { getLeafCategories } from "@/actions/categories";
 import { getLocations } from "@/actions/locations";
 import PageHeader from "@/components/shared/page-header";
 import InventoryForm from "@/components/inventory/inventory-form";
@@ -13,7 +13,7 @@ export default async function EditInventoryItemPage({
   const { id } = await params;
   const [item, categories, locations] = await Promise.all([
     getInventoryItem(id),
-    getCategories(),
+    getLeafCategories(),
     getLocations(),
   ]);
 
@@ -41,6 +41,7 @@ export default async function EditInventoryItemPage({
           storageTemp: item.storageTemp,
           shelfLifeDays: item.shelfLifeDays,
           notes: item.notes,
+          glCode: item.glCode,
           locationId: item.locationId,
         }}
       />

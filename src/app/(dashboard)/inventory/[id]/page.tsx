@@ -8,6 +8,8 @@ import { Badge } from "@/components/ui/badge";
 import StockLevelBadge from "@/components/inventory/stock-level-badge";
 import { Pencil } from "lucide-react";
 import ItemStockActions from "@/components/inventory/item-stock-actions";
+import { CategoryBreadcrumb } from "@/components/categories/category-breadcrumb";
+import { GlCodeBadge } from "@/components/categories/gl-code-badge";
 
 export default async function InventoryItemPage({
   params,
@@ -66,15 +68,13 @@ export default async function InventoryItemPage({
             <CardTitle className="text-sm font-medium">Category</CardTitle>
           </CardHeader>
           <CardContent>
-            <Badge
-              variant="outline"
-              style={{
-                borderColor: item.category.color ?? undefined,
-                color: item.category.color ?? undefined,
-              }}
-            >
-              {item.category.name}
-            </Badge>
+            <CategoryBreadcrumb category={item.category} />
+            <div className="mt-2 flex items-center gap-2">
+              <GlCodeBadge
+                itemGlCode={item.glCode}
+                category={item.category}
+              />
+            </div>
             <div className="mt-2 text-sm text-muted-foreground">
               Par: {Number(item.parLevel)} | Max: {item.maxLevel ? Number(item.maxLevel) : "—"}
             </div>
