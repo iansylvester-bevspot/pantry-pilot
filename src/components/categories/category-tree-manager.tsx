@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { deleteCategory, type CategoryTreeNode } from "@/actions/categories";
-import { CategoryFormDialog } from "./category-form-dialog";
+import { CategoryFormDialog, type ParentOption } from "./category-form-dialog";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 
 export function CategoryTreeManager({
@@ -38,6 +38,16 @@ export function CategoryTreeManager({
   // Separate assigned (SUPER with children) from unassigned (parentless non-SUPER)
   const superCategories = tree.filter((n) => n.type === "SUPER");
   const unassigned = tree.filter((n) => n.type !== "SUPER");
+
+  // Build flat list of all categories as potential parent options
+  const parentOptions: ParentOption[] = [];
+  function collectAll(nodes: CategoryTreeNode[]) {
+    for (const node of nodes) {
+      parentOptions.push({ id: node.id, name: node.name, type: node.type });
+      collectAll(node.children);
+    }
+  }
+  collectAll(tree);
 
   function openCreate(type: "SUPER" | "CATEGORY" | "SUBCATEGORY", parentId: string | null) {
     setEditingCategory(null);
@@ -339,6 +349,7 @@ export function CategoryTreeManager({
         onOpenChange={setFormOpen}
         type={formType}
         parentId={formParentId}
+        parentOptions={parentOptions}
         initialData={
           editingCategory
             ? {

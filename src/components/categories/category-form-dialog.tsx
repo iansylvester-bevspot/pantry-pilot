@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { createCategory, updateCategory } from "@/actions/categories";
 import type { CategoryType } from "@/generated/prisma/client";
@@ -25,10 +32,23 @@ type CategoryFormData = {
   parentId: string | null;
 };
 
+export type ParentOption = {
+  id: string;
+  name: string;
+  type: CategoryType;
+};
+
 const TYPE_LABELS: Record<CategoryType, string> = {
   SUPER: "Super Category",
   CATEGORY: "Category",
   SUBCATEGORY: "Subcategory",
+};
+
+// Which parent type is required for each category type
+const PARENT_TYPE_FOR: Record<CategoryType, CategoryType | null> = {
+  SUPER: null,
+  CATEGORY: "SUPER",
+  SUBCATEGORY: "CATEGORY",
 };
 
 export function CategoryFormDialog({
@@ -37,12 +57,14 @@ export function CategoryFormDialog({
   initialData,
   parentId,
   type,
+  parentOptions,
 }: {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialData?: CategoryFormData;
   parentId?: string | null;
   type: CategoryType;
+  parentOptions: ParentOption[];
 }) {
   const [isPending, startTransition] = useTransition();
   const isEditing = !!initialData?.id;
@@ -57,6 +79,42 @@ export function CategoryFormDialog({
       parentId: parentId ?? null,
     }
   );
+
+  // Reset form when dialog opens with new data
+  useEffect(() => {
+    if (open) {
+      setForm(
+        initialData ?? {
+          name: "",
+          description: "",
+          color: "",
+          glCode: "",
+          type,
+          parentId: parentId ?? null,
+        }
+      );
+    }
+  }, [open, initialData, type, parentId]);
+
+  // Filter parent options based on selected type
+  const requiredParentType = PARENT_TYPE_FOR[form.type];
+  const filteredParents = requiredParentType
+    ? parentOptions.filter((p) => p.type === requiredParentType && p.id !== initialData?.id)
+    : [];
+
+  function handleTypeChange(newType: CategoryType) {
+    const newRequiredParent = PARENT_TYPE_FOR[newType];
+    // Clear parentId if the new type doesn't need a parent, or if current parent is wrong type
+    const currentParent = parentOptions.find((p) => p.id === form.parentId);
+    const parentStillValid =
+      newRequiredParent && currentParent?.type === newRequiredParent;
+
+    setForm({
+      ...form,
+      type: newType,
+      parentId: parentStillValid ? form.parentId : null,
+    });
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -76,8 +134,8 @@ export function CategoryFormDialog({
       if (result.success) {
         toast.success(
           isEditing
-            ? `${TYPE_LABELS[type]} updated`
-            : `${TYPE_LABELS[type]} created`
+            ? `${TYPE_LABELS[form.type]} updated`
+            : `${TYPE_LABELS[form.type]} created`
         );
         onOpenChange(false);
       } else {
@@ -91,17 +149,68 @@ export function CategoryFormDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>
-            {isEditing ? "Edit" : "New"} {TYPE_LABELS[type]}
+            {isEditing ? "Edit" : "New"} {TYPE_LABELS[form.type]}
           </DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Type selector — shown when editing so user can reclassify */}
+          {isEditing && (
+            <div className="space-y-2">
+              <Label>Type</Label>
+              <Select
+                value={form.type}
+                onValueChange={(v) => handleTypeChange(v as CategoryType)}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="SUPER">Super Category</SelectItem>
+                  <SelectItem value="CATEGORY">Category</SelectItem>
+                  <SelectItem value="SUBCATEGORY">Subcategory</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {/* Parent selector — shown when type requires a parent */}
+          {requiredParentType && (
+            <div className="space-y-2">
+              <Label>
+                Parent {TYPE_LABELS[requiredParentType]}
+              </Label>
+              {filteredParents.length === 0 ? (
+                <p className="text-sm text-muted-foreground">
+                  No {TYPE_LABELS[requiredParentType].toLowerCase()}s exist yet.
+                  Create one first.
+                </p>
+              ) : (
+                <Select
+                  value={form.parentId ?? ""}
+                  onValueChange={(v) => setForm({ ...form, parentId: v || null })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder={`Select ${TYPE_LABELS[requiredParentType].toLowerCase()}`} />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {filteredParents.map((p) => (
+                      <SelectItem key={p.id} value={p.id}>
+                        {p.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            </div>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
-              placeholder={`e.g., ${type === "SUPER" ? "Food" : type === "CATEGORY" ? "Produce" : "Leafy Greens"}`}
+              placeholder={`e.g., ${form.type === "SUPER" ? "Food" : form.type === "CATEGORY" ? "Produce" : "Leafy Greens"}`}
               required
             />
           </div>
@@ -153,12 +262,15 @@ export function CategoryFormDialog({
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              disabled={isPending || (requiredParentType !== null && !form.parentId)}
+            >
               {isPending
                 ? "Saving..."
                 : isEditing
                   ? "Save Changes"
-                  : `Create ${TYPE_LABELS[type]}`}
+                  : `Create ${TYPE_LABELS[form.type]}`}
             </Button>
           </div>
         </form>
