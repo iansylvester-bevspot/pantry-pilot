@@ -3,13 +3,20 @@
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ChevronRight, ChevronLeft, X, Sparkles } from "lucide-react";
+import {
+  ChevronRight,
+  ChevronLeft,
+  X,
+  Sparkles,
+  Lightbulb,
+} from "lucide-react";
 
 export type WizardStep = {
   id: string;
   title: string;
   description: string;
   hint?: string;
+  tips?: string[];
   icon?: React.ReactNode;
   /** If true, this step auto-advances when `isComplete` returns true */
   canAutoAdvance?: boolean;
@@ -110,6 +117,24 @@ export function SetupWizard({
               <p className="text-sm font-medium text-primary/80">
                 {step.hint}
               </p>
+            )}
+            {step?.tips && step.tips.length > 0 && (
+              <div className="mt-3 rounded-md bg-background/60 border border-primary/10 p-3 space-y-2">
+                <div className="flex items-center gap-1.5 text-xs font-semibold text-amber-600 dark:text-amber-400">
+                  <Lightbulb className="h-3.5 w-3.5" />
+                  Tips
+                </div>
+                <ul className="space-y-1.5">
+                  {step.tips.map((tip, i) => (
+                    <li
+                      key={i}
+                      className="text-xs text-muted-foreground leading-relaxed pl-4 relative before:content-[''] before:absolute before:left-1 before:top-[7px] before:h-1 before:w-1 before:rounded-full before:bg-muted-foreground/40"
+                    >
+                      {tip}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
 
