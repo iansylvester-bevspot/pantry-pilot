@@ -76,6 +76,9 @@ interface InventoryFormProps {
     region: string | null;
     producer: string | null;
     abv: number | null;
+    brewery: string | null;
+    beerStyle: string | null;
+    ibu: number | null;
   };
 }
 
@@ -92,6 +95,7 @@ const OPTIONAL_FIELDS = [
   { key: "shelfLifeDays", label: "Shelf Life" },
   { key: "notes", label: "Notes" },
   { key: "wineDetails", label: "Wine Details" },
+  { key: "beerDetails", label: "Beer Details" },
 ] as const;
 
 type OptionalFieldKey = (typeof OPTIONAL_FIELDS)[number]["key"];
@@ -162,6 +166,9 @@ function fieldsWithData(
     item.abv
   ) {
     fields.add("wineDetails");
+  }
+  if (item.brewery || item.beerStyle || item.ibu) {
+    fields.add("beerDetails");
   }
   return fields;
 }
@@ -658,6 +665,73 @@ export default function InventoryForm({
                 placeholder="e.g., 13.5"
               />
             </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Beer details — toggleable section */}
+      {isVisible("beerDetails") && (
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle>Beer Details</CardTitle>
+            <button
+              type="button"
+              onClick={() => hideField("beerDetails")}
+              className="text-muted-foreground hover:text-foreground p-0.5 rounded-sm"
+              title="Remove Beer Details"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </CardHeader>
+          <CardContent className="grid gap-4 sm:grid-cols-2">
+            <div className="space-y-2">
+              <Label htmlFor="brewery">Brewery</Label>
+              <Input
+                id="brewery"
+                name="brewery"
+                defaultValue={item?.brewery ?? ""}
+                placeholder="e.g., Sierra Nevada"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="beerStyle">Style</Label>
+              <Input
+                id="beerStyle"
+                name="beerStyle"
+                defaultValue={item?.beerStyle ?? ""}
+                placeholder="e.g., IPA, Stout, Lager"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="ibu">IBU</Label>
+              <Input
+                id="ibu"
+                name="ibu"
+                type="number"
+                min="0"
+                max="200"
+                defaultValue={item?.ibu?.toString() ?? ""}
+                placeholder="e.g., 65"
+              />
+            </div>
+
+            {!isVisible("wineDetails") && (
+              <div className="space-y-2">
+                <Label htmlFor="abv">ABV (%)</Label>
+                <Input
+                  id="abv"
+                  name="abv"
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="100"
+                  defaultValue={item?.abv?.toString() ?? ""}
+                  placeholder="e.g., 6.8"
+                />
+              </div>
+            )}
           </CardContent>
         </Card>
       )}

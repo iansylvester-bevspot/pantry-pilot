@@ -30,6 +30,10 @@ export const inventoryItemSchema = z.object({
   region: z.string().optional(),
   producer: z.string().optional(),
   abv: z.coerce.number().min(0).max(100).optional(),
+  // Beer-specific fields
+  brewery: z.string().optional(),
+  beerStyle: z.string().optional(),
+  ibu: z.coerce.number().int().min(0).max(200).optional(),
 });
 
 export const stockAdjustmentSchema = z.object({

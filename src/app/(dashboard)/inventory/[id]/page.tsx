@@ -243,6 +243,42 @@ export default async function InventoryItemPage({
           </CardContent>
         </Card>
       )}
+
+      {(item.brewery || item.beerStyle || item.ibu) && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Beer Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {item.brewery && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Brewery</p>
+                  <p className="font-medium">{item.brewery}</p>
+                </div>
+              )}
+              {item.beerStyle && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Style</p>
+                  <p className="font-medium">{item.beerStyle}</p>
+                </div>
+              )}
+              {item.ibu && (
+                <div>
+                  <p className="text-sm text-muted-foreground">IBU</p>
+                  <p className="font-medium">{item.ibu}</p>
+                </div>
+              )}
+              {item.abv && (
+                <div>
+                  <p className="text-sm text-muted-foreground">ABV</p>
+                  <p className="font-medium">{Number(item.abv)}%</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

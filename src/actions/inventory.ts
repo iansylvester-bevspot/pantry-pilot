@@ -62,6 +62,9 @@ export async function createInventoryItem(
       region: formData.get("region") || undefined,
       producer: formData.get("producer") || undefined,
       abv: formData.get("abv") || undefined,
+      brewery: formData.get("brewery") || undefined,
+      beerStyle: formData.get("beerStyle") || undefined,
+      ibu: formData.get("ibu") || undefined,
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
@@ -104,6 +107,9 @@ export async function createInventoryItem(
           region: validated.data.region,
           producer: validated.data.producer,
           abv: validated.data.abv,
+          brewery: validated.data.brewery,
+          beerStyle: validated.data.beerStyle,
+          ibu: validated.data.ibu,
         },
       });
 
@@ -153,6 +159,9 @@ export async function updateInventoryItem(
       region: formData.get("region") || undefined,
       producer: formData.get("producer") || undefined,
       abv: formData.get("abv") || undefined,
+      brewery: formData.get("brewery") || undefined,
+      beerStyle: formData.get("beerStyle") || undefined,
+      ibu: formData.get("ibu") || undefined,
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
@@ -213,6 +222,9 @@ export async function updateInventoryItem(
           region: validated.data.region,
           producer: validated.data.producer,
           abv: validated.data.abv,
+          brewery: validated.data.brewery,
+          beerStyle: validated.data.beerStyle,
+          ibu: validated.data.ibu,
         },
       });
     });

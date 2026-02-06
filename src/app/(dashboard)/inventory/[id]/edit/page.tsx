@@ -49,6 +49,9 @@ export default async function EditInventoryItemPage({
           region: item.region,
           producer: item.producer,
           abv: item.abv ? Number(item.abv) : null,
+          brewery: item.brewery,
+          beerStyle: item.beerStyle,
+          ibu: item.ibu,
         }}
       />
     </div>

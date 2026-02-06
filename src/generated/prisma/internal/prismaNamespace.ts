@@ -1844,6 +1844,9 @@ export const InventoryItemScalarFieldEnum = {
   region: 'region',
   producer: 'producer',
   abv: 'abv',
+  brewery: 'brewery',
+  beerStyle: 'beerStyle',
+  ibu: 'ibu',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
