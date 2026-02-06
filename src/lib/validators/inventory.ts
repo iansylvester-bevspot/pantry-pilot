@@ -4,6 +4,9 @@ export const categorySchema = z.object({
   name: z.string().min(1, "Name is required"),
   description: z.string().optional(),
   color: z.string().optional(),
+  type: z.enum(["SUPER", "CATEGORY", "SUBCATEGORY"]).default("CATEGORY"),
+  parentId: z.string().nullable().optional(),
+  glCode: z.string().optional(),
 });
 
 export const inventoryItemSchema = z.object({
@@ -18,6 +21,7 @@ export const inventoryItemSchema = z.object({
   storageTemp: z.string().optional(),
   shelfLifeDays: z.coerce.number().int().min(0).optional(),
   notes: z.string().optional(),
+  glCode: z.string().optional(),
   locationId: z.string().min(1, "Location is required"),
 });
 

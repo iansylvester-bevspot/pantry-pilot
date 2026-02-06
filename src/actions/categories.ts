@@ -33,8 +33,8 @@ export async function createCategory(
       return { success: false, error: validated.error.issues[0].message };
     }
 
-    const existing = await prisma.category.findUnique({
-      where: { name: validated.data.name },
+    const existing = await prisma.category.findFirst({
+      where: { name: validated.data.name, parentId: validated.data.parentId ?? null },
     });
     if (existing) {
       return { success: false, error: "A category with this name already exists" };

@@ -171,6 +171,9 @@ export const CategoryScalarFieldEnum = {
   color: 'color',
   icon: 'icon',
   sortOrder: 'sortOrder',
+  type: 'type',
+  glCode: 'glCode',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -194,6 +197,7 @@ export const InventoryItemScalarFieldEnum = {
   storageTemp: 'storageTemp',
   shelfLifeDays: 'shelfLifeDays',
   notes: 'notes',
+  glCode: 'glCode',
   locationId: 'locationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

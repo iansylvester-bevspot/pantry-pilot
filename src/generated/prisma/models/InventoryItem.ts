@@ -56,6 +56,7 @@ export type InventoryItemMinAggregateOutputType = {
   storageTemp: string | null
   shelfLifeDays: number | null
   notes: string | null
+  glCode: string | null
   locationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -77,6 +78,7 @@ export type InventoryItemMaxAggregateOutputType = {
   storageTemp: string | null
   shelfLifeDays: number | null
   notes: string | null
+  glCode: string | null
   locationId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -98,6 +100,7 @@ export type InventoryItemCountAggregateOutputType = {
   storageTemp: number
   shelfLifeDays: number
   notes: number
+  glCode: number
   locationId: number
   createdAt: number
   updatedAt: number
@@ -135,6 +138,7 @@ export type InventoryItemMinAggregateInputType = {
   storageTemp?: true
   shelfLifeDays?: true
   notes?: true
+  glCode?: true
   locationId?: true
   createdAt?: true
   updatedAt?: true
@@ -156,6 +160,7 @@ export type InventoryItemMaxAggregateInputType = {
   storageTemp?: true
   shelfLifeDays?: true
   notes?: true
+  glCode?: true
   locationId?: true
   createdAt?: true
   updatedAt?: true
@@ -177,6 +182,7 @@ export type InventoryItemCountAggregateInputType = {
   storageTemp?: true
   shelfLifeDays?: true
   notes?: true
+  glCode?: true
   locationId?: true
   createdAt?: true
   updatedAt?: true
@@ -285,6 +291,7 @@ export type InventoryItemGroupByOutputType = {
   storageTemp: string | null
   shelfLifeDays: number | null
   notes: string | null
+  glCode: string | null
   locationId: string
   createdAt: Date
   updatedAt: Date
@@ -329,6 +336,7 @@ export type InventoryItemWhereInput = {
   storageTemp?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   shelfLifeDays?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
   notes?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
+  glCode?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   locationId?: Prisma.StringFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
@@ -357,6 +365,7 @@ export type InventoryItemOrderByWithRelationInput = {
   storageTemp?: Prisma.SortOrderInput | Prisma.SortOrder
   shelfLifeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  glCode?: Prisma.SortOrderInput | Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -388,6 +397,7 @@ export type InventoryItemWhereUniqueInput = Prisma.AtLeast<{
   storageTemp?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   shelfLifeDays?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
   notes?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
+  glCode?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   locationId?: Prisma.StringFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
@@ -416,6 +426,7 @@ export type InventoryItemOrderByWithAggregationInput = {
   storageTemp?: Prisma.SortOrderInput | Prisma.SortOrder
   shelfLifeDays?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
+  glCode?: Prisma.SortOrderInput | Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -445,6 +456,7 @@ export type InventoryItemScalarWhereWithAggregatesInput = {
   storageTemp?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   shelfLifeDays?: Prisma.IntNullableWithAggregatesFilter<"InventoryItem"> | number | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
+  glCode?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   locationId?: Prisma.StringWithAggregatesFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"InventoryItem"> | Date | string
@@ -465,6 +477,7 @@ export type InventoryItemCreateInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -492,6 +505,7 @@ export type InventoryItemUncheckedCreateInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -517,6 +531,7 @@ export type InventoryItemUpdateInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -544,6 +559,7 @@ export type InventoryItemUncheckedUpdateInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -570,6 +586,7 @@ export type InventoryItemCreateManyInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -590,6 +607,7 @@ export type InventoryItemUpdateManyMutationInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -610,6 +628,7 @@ export type InventoryItemUncheckedUpdateManyInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -641,6 +660,7 @@ export type InventoryItemCountOrderByAggregateInput = {
   storageTemp?: Prisma.SortOrder
   shelfLifeDays?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  glCode?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -669,6 +689,7 @@ export type InventoryItemMaxOrderByAggregateInput = {
   storageTemp?: Prisma.SortOrder
   shelfLifeDays?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  glCode?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -690,6 +711,7 @@ export type InventoryItemMinOrderByAggregateInput = {
   storageTemp?: Prisma.SortOrder
   shelfLifeDays?: Prisma.SortOrder
   notes?: Prisma.SortOrder
+  glCode?: Prisma.SortOrder
   locationId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -896,6 +918,7 @@ export type InventoryItemCreateWithoutLocationInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -922,6 +945,7 @@ export type InventoryItemUncheckedCreateWithoutLocationInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stockLevels?: Prisma.StockLevelUncheckedCreateNestedManyWithoutInventoryItemInput
@@ -976,6 +1000,7 @@ export type InventoryItemScalarWhereInput = {
   storageTemp?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   shelfLifeDays?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
   notes?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
+  glCode?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   locationId?: Prisma.StringFilter<"InventoryItem"> | string
   createdAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InventoryItem"> | Date | string
@@ -996,6 +1021,7 @@ export type InventoryItemCreateWithoutCategoryInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   location: Prisma.LocationCreateNestedOneWithoutInventoryItemsInput
@@ -1021,6 +1047,7 @@ export type InventoryItemUncheckedCreateWithoutCategoryInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1072,6 +1099,7 @@ export type InventoryItemCreateWithoutStockLevelsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -1098,6 +1126,7 @@ export type InventoryItemUncheckedCreateWithoutStockLevelsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1138,6 +1167,7 @@ export type InventoryItemUpdateWithoutStockLevelsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1164,6 +1194,7 @@ export type InventoryItemUncheckedUpdateWithoutStockLevelsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1188,6 +1219,7 @@ export type InventoryItemCreateWithoutSupplierItemsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -1214,6 +1246,7 @@ export type InventoryItemUncheckedCreateWithoutSupplierItemsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1254,6 +1287,7 @@ export type InventoryItemUpdateWithoutSupplierItemsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1280,6 +1314,7 @@ export type InventoryItemUncheckedUpdateWithoutSupplierItemsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1304,6 +1339,7 @@ export type InventoryItemCreateWithoutOrderLinesInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -1330,6 +1366,7 @@ export type InventoryItemUncheckedCreateWithoutOrderLinesInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1370,6 +1407,7 @@ export type InventoryItemUpdateWithoutOrderLinesInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1396,6 +1434,7 @@ export type InventoryItemUncheckedUpdateWithoutOrderLinesInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1420,6 +1459,7 @@ export type InventoryItemCreateWithoutWasteLogsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -1446,6 +1486,7 @@ export type InventoryItemUncheckedCreateWithoutWasteLogsInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1486,6 +1527,7 @@ export type InventoryItemUpdateWithoutWasteLogsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1512,6 +1554,7 @@ export type InventoryItemUncheckedUpdateWithoutWasteLogsInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1536,6 +1579,7 @@ export type InventoryItemCreateWithoutPriceHistoryInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   category: Prisma.CategoryCreateNestedOneWithoutItemsInput
@@ -1562,6 +1606,7 @@ export type InventoryItemUncheckedCreateWithoutPriceHistoryInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1602,6 +1647,7 @@ export type InventoryItemUpdateWithoutPriceHistoryInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1628,6 +1674,7 @@ export type InventoryItemUncheckedUpdateWithoutPriceHistoryInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1653,6 +1700,7 @@ export type InventoryItemCreateManyLocationInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1672,6 +1720,7 @@ export type InventoryItemUpdateWithoutLocationInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   category?: Prisma.CategoryUpdateOneRequiredWithoutItemsNestedInput
@@ -1698,6 +1747,7 @@ export type InventoryItemUncheckedUpdateWithoutLocationInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stockLevels?: Prisma.StockLevelUncheckedUpdateManyWithoutInventoryItemNestedInput
@@ -1723,6 +1773,7 @@ export type InventoryItemUncheckedUpdateManyWithoutLocationInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1742,6 +1793,7 @@ export type InventoryItemCreateManyCategoryInput = {
   storageTemp?: string | null
   shelfLifeDays?: number | null
   notes?: string | null
+  glCode?: string | null
   locationId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1762,6 +1814,7 @@ export type InventoryItemUpdateWithoutCategoryInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   location?: Prisma.LocationUpdateOneRequiredWithoutInventoryItemsNestedInput
@@ -1787,6 +1840,7 @@ export type InventoryItemUncheckedUpdateWithoutCategoryInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1812,6 +1866,7 @@ export type InventoryItemUncheckedUpdateManyWithoutCategoryInput = {
   storageTemp?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shelfLifeDays?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  glCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   locationId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1900,6 +1955,7 @@ export type InventoryItemSelect<ExtArgs extends runtime.Types.Extensions.Interna
   storageTemp?: boolean
   shelfLifeDays?: boolean
   notes?: boolean
+  glCode?: boolean
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1929,6 +1985,7 @@ export type InventoryItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   storageTemp?: boolean
   shelfLifeDays?: boolean
   notes?: boolean
+  glCode?: boolean
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1952,6 +2009,7 @@ export type InventoryItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   storageTemp?: boolean
   shelfLifeDays?: boolean
   notes?: boolean
+  glCode?: boolean
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1975,12 +2033,13 @@ export type InventoryItemSelectScalar = {
   storageTemp?: boolean
   shelfLifeDays?: boolean
   notes?: boolean
+  glCode?: boolean
   locationId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "description" | "categoryId" | "unit" | "unitCost" | "parLevel" | "maxLevel" | "isActive" | "imageUrl" | "barcode" | "storageTemp" | "shelfLifeDays" | "notes" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryItem"]>
+export type InventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "description" | "categoryId" | "unit" | "unitCost" | "parLevel" | "maxLevel" | "isActive" | "imageUrl" | "barcode" | "storageTemp" | "shelfLifeDays" | "notes" | "glCode" | "locationId" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryItem"]>
 export type InventoryItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -2027,6 +2086,7 @@ export type $InventoryItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     storageTemp: string | null
     shelfLifeDays: number | null
     notes: string | null
+    glCode: string | null
     locationId: string
     createdAt: Date
     updatedAt: Date
@@ -2475,6 +2535,7 @@ export interface InventoryItemFieldRefs {
   readonly storageTemp: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly shelfLifeDays: Prisma.FieldRef<"InventoryItem", 'Int'>
   readonly notes: Prisma.FieldRef<"InventoryItem", 'String'>
+  readonly glCode: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly locationId: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly createdAt: Prisma.FieldRef<"InventoryItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"InventoryItem", 'DateTime'>

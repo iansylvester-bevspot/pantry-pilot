@@ -47,6 +47,12 @@ enum UnitType {
   DOZEN
 }
 
+enum CategoryType {
+  SUPER
+  CATEGORY
+  SUBCATEGORY
+}
+
 enum WasteReason {
   EXPIRED
   SPOILED
@@ -171,17 +177,25 @@ model LocationUser {
 // ============================================================
 
 model Category {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String       @id @default(cuid())
+  name        String
   description String?
   color       String?
   icon        String?
-  sortOrder   Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  sortOrder   Int          @default(0)
+  type        CategoryType @default(CATEGORY)
+  glCode      String?
+  parentId    String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
-  items InventoryItem[]
+  parent   Category?  @relation("CategoryHierarchy", fields: [parentId], references: [id], onDelete: Restrict)
+  children Category[] @relation("CategoryHierarchy")
+  items    InventoryItem[]
 
+  @@unique([name, parentId])
+  @@index([parentId])
+  @@index([type])
   @@map("categories")
 }
 
@@ -201,6 +215,7 @@ model InventoryItem {
   storageTemp   String?
   shelfLifeDays Int?
   notes         String?
+  glCode        String?
   locationId    String
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

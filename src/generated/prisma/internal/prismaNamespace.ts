@@ -1810,6 +1810,9 @@ export const CategoryScalarFieldEnum = {
   color: 'color',
   icon: 'icon',
   sortOrder: 'sortOrder',
+  type: 'type',
+  glCode: 'glCode',
+  parentId: 'parentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1833,6 +1836,7 @@ export const InventoryItemScalarFieldEnum = {
   storageTemp: 'storageTemp',
   shelfLifeDays: 'shelfLifeDays',
   notes: 'notes',
+  glCode: 'glCode',
   locationId: 'locationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -2089,6 +2093,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'CategoryType'
+ */
+export type EnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType'>
+    
+
+
+/**
+ * Reference to a field of type 'CategoryType[]'
+ */
+export type ListEnumCategoryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'CategoryType[]'>
     
 
 

@@ -53,6 +53,15 @@ export const UnitType = {
 export type UnitType = (typeof UnitType)[keyof typeof UnitType]
 
 
+export const CategoryType = {
+  SUPER: 'SUPER',
+  CATEGORY: 'CATEGORY',
+  SUBCATEGORY: 'SUBCATEGORY'
+} as const
+
+export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
+
+
 export const WasteReason = {
   EXPIRED: 'EXPIRED',
   SPOILED: 'SPOILED',
