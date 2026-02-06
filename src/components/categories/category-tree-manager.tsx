@@ -21,6 +21,7 @@ import {
 import { toast } from "sonner";
 import { deleteCategory, type CategoryTreeNode } from "@/actions/categories";
 import { CategoryFormDialog, type ParentOption } from "./category-form-dialog";
+import { BulkCreateDialog } from "./bulk-create-dialog";
 import ConfirmDialog from "@/components/shared/confirm-dialog";
 
 export function CategoryTreeManager({
@@ -33,6 +34,9 @@ export function CategoryTreeManager({
   const [formParentId, setFormParentId] = useState<string | null>(null);
   const [editingCategory, setEditingCategory] = useState<CategoryTreeNode | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<CategoryTreeNode | null>(null);
+  const [bulkOpen, setBulkOpen] = useState(false);
+  const [bulkType, setBulkType] = useState<"SUPER" | "CATEGORY" | "SUBCATEGORY">("SUPER");
+  const [bulkParentId, setBulkParentId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   // Separate assigned (SUPER with children) from unassigned (parentless non-SUPER)
@@ -54,6 +58,12 @@ export function CategoryTreeManager({
     setFormType(type);
     setFormParentId(parentId);
     setFormOpen(true);
+  }
+
+  function openBulk(type: "SUPER" | "CATEGORY" | "SUBCATEGORY", parentId: string | null) {
+    setBulkType(type);
+    setBulkParentId(parentId);
+    setBulkOpen(true);
   }
 
   function openEdit(node: CategoryTreeNode) {
@@ -82,10 +92,16 @@ export function CategoryTreeManager({
         <p className="text-sm text-muted-foreground">
           Organize your categories into a hierarchy: Super Category &gt; Category &gt; Subcategory
         </p>
-        <Button onClick={() => openCreate("SUPER", null)} size="sm">
-          <Plus className="h-4 w-4 mr-1" />
-          Add Super Category
-        </Button>
+        <div className="flex gap-2">
+          <Button onClick={() => openBulk("SUPER", null)} size="sm" variant="outline">
+            <Plus className="h-4 w-4 mr-1" />
+            Bulk Add
+          </Button>
+          <Button onClick={() => openCreate("SUPER", null)} size="sm">
+            <Plus className="h-4 w-4 mr-1" />
+            Add Super Category
+          </Button>
+        </div>
       </div>
 
       {superCategories.length === 0 && unassigned.length === 0 && (
@@ -143,6 +159,13 @@ export function CategoryTreeManager({
                     onClick={() => openCreate("CATEGORY", superCat.id)}
                   >
                     <Plus className="h-3 w-3 mr-1" /> Add Category
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => openBulk("CATEGORY", superCat.id)}
+                  >
+                    <Plus className="h-3 w-3 mr-1" /> Bulk Add
                   </Button>
                   <Button
                     size="sm"
@@ -212,6 +235,14 @@ export function CategoryTreeManager({
                               }
                             >
                               <Plus className="h-3 w-3 mr-1" /> Add Subcategory
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="ghost"
+                              className="h-7 text-xs"
+                              onClick={() => openBulk("SUBCATEGORY", cat.id)}
+                            >
+                              <Plus className="h-3 w-3 mr-1" /> Bulk Add
                             </Button>
                             <Button
                               size="sm"
@@ -363,6 +394,15 @@ export function CategoryTreeManager({
               }
             : undefined
         }
+      />
+
+      {/* Bulk create dialog */}
+      <BulkCreateDialog
+        open={bulkOpen}
+        onOpenChange={setBulkOpen}
+        type={bulkType}
+        parentId={bulkParentId}
+        parentOptions={parentOptions}
       />
 
       {/* Delete confirm */}

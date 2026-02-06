@@ -304,3 +304,76 @@ export async function deleteCategory(id: string): Promise<ActionResult> {
     return { success: false, error: "Failed to delete category" };
   }
 }
+
+export async function bulkCreateCategories(data: {
+  names: string[];
+  type: CategoryType;
+  parentId: string | null;
+}): Promise<ActionResult<{ created: number; skipped: string[] }>> {
+  try {
+    await requireRole(["ADMIN", "MANAGER"]);
+
+    const { names, type, parentId } = data;
+
+    if (names.length === 0) {
+      return { success: false, error: "No names provided" };
+    }
+
+    // Validate hierarchy
+    const expectedParentType = VALID_PARENT_TYPE[type];
+    if (expectedParentType === null && parentId) {
+      return { success: false, error: "Super categories cannot have a parent" };
+    }
+    if (expectedParentType !== null) {
+      if (!parentId) {
+        return {
+          success: false,
+          error: `A ${type.toLowerCase()} must have a parent`,
+        };
+      }
+      const parent = await prisma.category.findUnique({
+        where: { id: parentId },
+      });
+      if (!parent || parent.type !== expectedParentType) {
+        return { success: false, error: "Invalid parent category" };
+      }
+    }
+
+    // Get current max sort order under this parent
+    const maxSort = await prisma.category.aggregate({
+      _max: { sortOrder: true },
+      where: { parentId: parentId ?? null },
+    });
+    let nextSort = (maxSort._max.sortOrder ?? 0) + 1;
+
+    // Check which names already exist under this parent
+    const existing = await prisma.category.findMany({
+      where: { parentId: parentId ?? null, name: { in: names } },
+      select: { name: true },
+    });
+    const existingNames = new Set(existing.map((e) => e.name));
+
+    const toCreate = names.filter((n) => !existingNames.has(n));
+    const skipped = names.filter((n) => existingNames.has(n));
+
+    if (toCreate.length > 0) {
+      await prisma.category.createMany({
+        data: toCreate.map((name) => ({
+          name,
+          type,
+          parentId: parentId ?? null,
+          sortOrder: nextSort++,
+        })),
+      });
+    }
+
+    revalidatePath("/categories");
+    revalidatePath("/inventory");
+    return {
+      success: true,
+      data: { created: toCreate.length, skipped },
+    };
+  } catch {
+    return { success: false, error: "Failed to create categories" };
+  }
+}
