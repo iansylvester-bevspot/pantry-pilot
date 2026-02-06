@@ -27,6 +27,7 @@ export type AggregateInventoryItem = {
 }
 
 export type InventoryItemAvgAggregateOutputType = {
+  packSize: number | null
   unitCost: runtime.Decimal | null
   parLevel: runtime.Decimal | null
   maxLevel: runtime.Decimal | null
@@ -37,6 +38,7 @@ export type InventoryItemAvgAggregateOutputType = {
 }
 
 export type InventoryItemSumAggregateOutputType = {
+  packSize: number | null
   unitCost: runtime.Decimal | null
   parLevel: runtime.Decimal | null
   maxLevel: runtime.Decimal | null
@@ -53,6 +55,8 @@ export type InventoryItemMinAggregateOutputType = {
   description: string | null
   categoryId: string | null
   unit: $Enums.UnitType | null
+  packSize: number | null
+  packUnit: string | null
   unitCost: runtime.Decimal | null
   parLevel: runtime.Decimal | null
   maxLevel: runtime.Decimal | null
@@ -84,6 +88,8 @@ export type InventoryItemMaxAggregateOutputType = {
   description: string | null
   categoryId: string | null
   unit: $Enums.UnitType | null
+  packSize: number | null
+  packUnit: string | null
   unitCost: runtime.Decimal | null
   parLevel: runtime.Decimal | null
   maxLevel: runtime.Decimal | null
@@ -115,6 +121,8 @@ export type InventoryItemCountAggregateOutputType = {
   description: number
   categoryId: number
   unit: number
+  packSize: number
+  packUnit: number
   unitCost: number
   parLevel: number
   maxLevel: number
@@ -142,6 +150,7 @@ export type InventoryItemCountAggregateOutputType = {
 
 
 export type InventoryItemAvgAggregateInputType = {
+  packSize?: true
   unitCost?: true
   parLevel?: true
   maxLevel?: true
@@ -152,6 +161,7 @@ export type InventoryItemAvgAggregateInputType = {
 }
 
 export type InventoryItemSumAggregateInputType = {
+  packSize?: true
   unitCost?: true
   parLevel?: true
   maxLevel?: true
@@ -168,6 +178,8 @@ export type InventoryItemMinAggregateInputType = {
   description?: true
   categoryId?: true
   unit?: true
+  packSize?: true
+  packUnit?: true
   unitCost?: true
   parLevel?: true
   maxLevel?: true
@@ -199,6 +211,8 @@ export type InventoryItemMaxAggregateInputType = {
   description?: true
   categoryId?: true
   unit?: true
+  packSize?: true
+  packUnit?: true
   unitCost?: true
   parLevel?: true
   maxLevel?: true
@@ -230,6 +244,8 @@ export type InventoryItemCountAggregateInputType = {
   description?: true
   categoryId?: true
   unit?: true
+  packSize?: true
+  packUnit?: true
   unitCost?: true
   parLevel?: true
   maxLevel?: true
@@ -348,6 +364,8 @@ export type InventoryItemGroupByOutputType = {
   description: string | null
   categoryId: string | null
   unit: $Enums.UnitType
+  packSize: number | null
+  packUnit: string | null
   unitCost: runtime.Decimal
   parLevel: runtime.Decimal
   maxLevel: runtime.Decimal | null
@@ -402,6 +420,8 @@ export type InventoryItemWhereInput = {
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
+  packSize?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
+  packUnit?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.DecimalNullableFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -440,6 +460,8 @@ export type InventoryItemOrderByWithRelationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrder
+  packSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  packUnit?: Prisma.SortOrderInput | Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -482,6 +504,8 @@ export type InventoryItemWhereUniqueInput = Prisma.AtLeast<{
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
+  packSize?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
+  packUnit?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.DecimalNullableFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -519,6 +543,8 @@ export type InventoryItemOrderByWithAggregationInput = {
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   categoryId?: Prisma.SortOrderInput | Prisma.SortOrder
   unit?: Prisma.SortOrder
+  packSize?: Prisma.SortOrderInput | Prisma.SortOrder
+  packUnit?: Prisma.SortOrderInput | Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -558,6 +584,8 @@ export type InventoryItemScalarWhereWithAggregatesInput = {
   description?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   categoryId?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeWithAggregatesFilter<"InventoryItem"> | $Enums.UnitType
+  packSize?: Prisma.IntNullableWithAggregatesFilter<"InventoryItem"> | number | null
+  packUnit?: Prisma.StringNullableWithAggregatesFilter<"InventoryItem"> | string | null
   unitCost?: Prisma.DecimalWithAggregatesFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalWithAggregatesFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.DecimalNullableWithAggregatesFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -588,6 +616,8 @@ export type InventoryItemCreateInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -625,6 +655,8 @@ export type InventoryItemUncheckedCreateInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -660,6 +692,8 @@ export type InventoryItemUpdateInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -697,6 +731,8 @@ export type InventoryItemUncheckedUpdateInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -733,6 +769,8 @@ export type InventoryItemCreateManyInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -763,6 +801,8 @@ export type InventoryItemUpdateManyMutationInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -793,6 +833,8 @@ export type InventoryItemUncheckedUpdateManyInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -834,6 +876,8 @@ export type InventoryItemCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  packSize?: Prisma.SortOrder
+  packUnit?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrder
@@ -859,6 +903,7 @@ export type InventoryItemCountOrderByAggregateInput = {
 }
 
 export type InventoryItemAvgOrderByAggregateInput = {
+  packSize?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrder
@@ -875,6 +920,8 @@ export type InventoryItemMaxOrderByAggregateInput = {
   description?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  packSize?: Prisma.SortOrder
+  packUnit?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrder
@@ -906,6 +953,8 @@ export type InventoryItemMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   categoryId?: Prisma.SortOrder
   unit?: Prisma.SortOrder
+  packSize?: Prisma.SortOrder
+  packUnit?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrder
@@ -931,6 +980,7 @@ export type InventoryItemMinOrderByAggregateInput = {
 }
 
 export type InventoryItemSumOrderByAggregateInput = {
+  packSize?: Prisma.SortOrder
   unitCost?: Prisma.SortOrder
   parLevel?: Prisma.SortOrder
   maxLevel?: Prisma.SortOrder
@@ -1125,6 +1175,8 @@ export type InventoryItemCreateWithoutLocationInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1161,6 +1213,8 @@ export type InventoryItemUncheckedCreateWithoutLocationInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1225,6 +1279,8 @@ export type InventoryItemScalarWhereInput = {
   description?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   categoryId?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unit?: Prisma.EnumUnitTypeFilter<"InventoryItem"> | $Enums.UnitType
+  packSize?: Prisma.IntNullableFilter<"InventoryItem"> | number | null
+  packUnit?: Prisma.StringNullableFilter<"InventoryItem"> | string | null
   unitCost?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.DecimalNullableFilter<"InventoryItem"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1255,6 +1311,8 @@ export type InventoryItemCreateWithoutCategoryInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1290,6 +1348,8 @@ export type InventoryItemUncheckedCreateWithoutCategoryInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1351,6 +1411,8 @@ export type InventoryItemCreateWithoutStockLevelsInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1387,6 +1449,8 @@ export type InventoryItemUncheckedCreateWithoutStockLevelsInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1437,6 +1501,8 @@ export type InventoryItemUpdateWithoutStockLevelsInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1473,6 +1539,8 @@ export type InventoryItemUncheckedUpdateWithoutStockLevelsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1507,6 +1575,8 @@ export type InventoryItemCreateWithoutSupplierItemsInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1543,6 +1613,8 @@ export type InventoryItemUncheckedCreateWithoutSupplierItemsInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1593,6 +1665,8 @@ export type InventoryItemUpdateWithoutSupplierItemsInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1629,6 +1703,8 @@ export type InventoryItemUncheckedUpdateWithoutSupplierItemsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1663,6 +1739,8 @@ export type InventoryItemCreateWithoutOrderLinesInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1699,6 +1777,8 @@ export type InventoryItemUncheckedCreateWithoutOrderLinesInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1749,6 +1829,8 @@ export type InventoryItemUpdateWithoutOrderLinesInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1785,6 +1867,8 @@ export type InventoryItemUncheckedUpdateWithoutOrderLinesInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1819,6 +1903,8 @@ export type InventoryItemCreateWithoutWasteLogsInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1855,6 +1941,8 @@ export type InventoryItemUncheckedCreateWithoutWasteLogsInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1905,6 +1993,8 @@ export type InventoryItemUpdateWithoutWasteLogsInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1941,6 +2031,8 @@ export type InventoryItemUncheckedUpdateWithoutWasteLogsInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -1975,6 +2067,8 @@ export type InventoryItemCreateWithoutPriceHistoryInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2011,6 +2105,8 @@ export type InventoryItemUncheckedCreateWithoutPriceHistoryInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2061,6 +2157,8 @@ export type InventoryItemUpdateWithoutPriceHistoryInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2097,6 +2195,8 @@ export type InventoryItemUncheckedUpdateWithoutPriceHistoryInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2132,6 +2232,8 @@ export type InventoryItemCreateManyLocationInput = {
   description?: string | null
   categoryId?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2161,6 +2263,8 @@ export type InventoryItemUpdateWithoutLocationInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2197,6 +2301,8 @@ export type InventoryItemUncheckedUpdateWithoutLocationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2232,6 +2338,8 @@ export type InventoryItemUncheckedUpdateManyWithoutLocationInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   categoryId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2261,6 +2369,8 @@ export type InventoryItemCreateManyCategoryInput = {
   sku?: string | null
   description?: string | null
   unit?: $Enums.UnitType
+  packSize?: number | null
+  packUnit?: string | null
   unitCost?: runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2291,6 +2401,8 @@ export type InventoryItemUpdateWithoutCategoryInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2326,6 +2438,8 @@ export type InventoryItemUncheckedUpdateWithoutCategoryInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2361,6 +2475,8 @@ export type InventoryItemUncheckedUpdateManyWithoutCategoryInput = {
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unit?: Prisma.EnumUnitTypeFieldUpdateOperationsInput | $Enums.UnitType
+  packSize?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  packUnit?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   unitCost?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   parLevel?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   maxLevel?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
@@ -2459,6 +2575,8 @@ export type InventoryItemSelect<ExtArgs extends runtime.Types.Extensions.Interna
   description?: boolean
   categoryId?: boolean
   unit?: boolean
+  packSize?: boolean
+  packUnit?: boolean
   unitCost?: boolean
   parLevel?: boolean
   maxLevel?: boolean
@@ -2498,6 +2616,8 @@ export type InventoryItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   description?: boolean
   categoryId?: boolean
   unit?: boolean
+  packSize?: boolean
+  packUnit?: boolean
   unitCost?: boolean
   parLevel?: boolean
   maxLevel?: boolean
@@ -2531,6 +2651,8 @@ export type InventoryItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   description?: boolean
   categoryId?: boolean
   unit?: boolean
+  packSize?: boolean
+  packUnit?: boolean
   unitCost?: boolean
   parLevel?: boolean
   maxLevel?: boolean
@@ -2564,6 +2686,8 @@ export type InventoryItemSelectScalar = {
   description?: boolean
   categoryId?: boolean
   unit?: boolean
+  packSize?: boolean
+  packUnit?: boolean
   unitCost?: boolean
   parLevel?: boolean
   maxLevel?: boolean
@@ -2588,7 +2712,7 @@ export type InventoryItemSelectScalar = {
   updatedAt?: boolean
 }
 
-export type InventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "description" | "categoryId" | "unit" | "unitCost" | "parLevel" | "maxLevel" | "isActive" | "imageUrl" | "barcode" | "storageTemp" | "shelfLifeDays" | "notes" | "glCode" | "locationId" | "vintage" | "binNumber" | "varietal" | "region" | "producer" | "abv" | "brewery" | "beerStyle" | "ibu" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryItem"]>
+export type InventoryItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "description" | "categoryId" | "unit" | "packSize" | "packUnit" | "unitCost" | "parLevel" | "maxLevel" | "isActive" | "imageUrl" | "barcode" | "storageTemp" | "shelfLifeDays" | "notes" | "glCode" | "locationId" | "vintage" | "binNumber" | "varietal" | "region" | "producer" | "abv" | "brewery" | "beerStyle" | "ibu" | "createdAt" | "updatedAt", ExtArgs["result"]["inventoryItem"]>
 export type InventoryItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   category?: boolean | Prisma.InventoryItem$categoryArgs<ExtArgs>
   location?: boolean | Prisma.LocationDefaultArgs<ExtArgs>
@@ -2626,6 +2750,8 @@ export type $InventoryItemPayload<ExtArgs extends runtime.Types.Extensions.Inter
     description: string | null
     categoryId: string | null
     unit: $Enums.UnitType
+    packSize: number | null
+    packUnit: string | null
     unitCost: runtime.Decimal
     parLevel: runtime.Decimal
     maxLevel: runtime.Decimal | null
@@ -3084,6 +3210,8 @@ export interface InventoryItemFieldRefs {
   readonly description: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly categoryId: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly unit: Prisma.FieldRef<"InventoryItem", 'UnitType'>
+  readonly packSize: Prisma.FieldRef<"InventoryItem", 'Int'>
+  readonly packUnit: Prisma.FieldRef<"InventoryItem", 'String'>
   readonly unitCost: Prisma.FieldRef<"InventoryItem", 'Decimal'>
   readonly parLevel: Prisma.FieldRef<"InventoryItem", 'Decimal'>
   readonly maxLevel: Prisma.FieldRef<"InventoryItem", 'Decimal'>

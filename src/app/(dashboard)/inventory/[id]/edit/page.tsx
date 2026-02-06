@@ -35,6 +35,8 @@ export default async function EditInventoryItemPage({
           description: item.description,
           categoryId: item.categoryId ?? "",
           unit: item.unit,
+          packSize: item.packSize,
+          packUnit: item.packUnit,
           unitCost: Number(item.unitCost),
           parLevel: Number(item.parLevel),
           maxLevel: item.maxLevel ? Number(item.maxLevel) : null,

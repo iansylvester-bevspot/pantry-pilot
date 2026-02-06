@@ -1827,6 +1827,8 @@ export const InventoryItemScalarFieldEnum = {
   description: 'description',
   categoryId: 'categoryId',
   unit: 'unit',
+  packSize: 'packSize',
+  packUnit: 'packUnit',
   unitCost: 'unitCost',
   parLevel: 'parLevel',
   maxLevel: 'maxLevel',

@@ -62,6 +62,8 @@ interface InventoryFormProps {
     description: string | null;
     categoryId: string;
     unit: string;
+    packSize: number | null;
+    packUnit: string | null;
     unitCost: number | { toString(): string };
     parLevel: number | { toString(): string };
     maxLevel: number | { toString(): string } | null;
@@ -293,6 +295,32 @@ export default function InventoryForm({
           <div className="space-y-2 sm:col-span-2">
             <Label htmlFor="name">Name *</Label>
             <Input id="name" name="name" defaultValue={item?.name} required />
+          </div>
+
+          <div className="space-y-2">
+            <Label>Case / Pack Size</Label>
+            <div className="flex gap-2">
+              <Input
+                id="packSize"
+                name="packSize"
+                type="number"
+                min="1"
+                className="w-20"
+                defaultValue={item?.packSize?.toString() ?? ""}
+                placeholder="Qty"
+              />
+              <span className="flex items-center text-sm text-muted-foreground">&times;</span>
+              <Input
+                id="packUnit"
+                name="packUnit"
+                className="flex-1"
+                defaultValue={item?.packUnit ?? ""}
+                placeholder="e.g., 5lb bags, 750ml bottles"
+              />
+            </div>
+            <p className="text-xs text-muted-foreground">
+              e.g., 8 &times; 5lb bags, 12 &times; 750ml bottles
+            </p>
           </div>
 
           <div className="space-y-2">

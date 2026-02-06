@@ -11,6 +11,17 @@ import ItemStockActions from "@/components/inventory/item-stock-actions";
 import { CategoryBreadcrumb } from "@/components/categories/category-breadcrumb";
 import { GlCodeBadge } from "@/components/categories/gl-code-badge";
 
+function formatUnit(item: { unit: string; packSize: number | null; packUnit: string | null }) {
+  const base = item.unit.toLowerCase();
+  if (item.packSize && item.packUnit) {
+    return `${base} (${item.packSize} × ${item.packUnit})`;
+  }
+  if (item.packSize) {
+    return `${base} (${item.packSize}/case)`;
+  }
+  return base;
+}
+
 export default async function InventoryItemPage({
   params,
 }: {
@@ -44,7 +55,7 @@ export default async function InventoryItemPage({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {totalStock} {item.unit.toLowerCase()}
+              {totalStock} {formatUnit(item)}
             </div>
             <StockLevelBadge
               quantity={totalStock}
@@ -60,7 +71,7 @@ export default async function InventoryItemPage({
             <div className="text-2xl font-bold">
               ${Number(item.unitCost).toFixed(2)}
             </div>
-            <p className="text-xs text-muted-foreground">per {item.unit.toLowerCase()}</p>
+            <p className="text-xs text-muted-foreground">per {formatUnit(item)}</p>
           </CardContent>
         </Card>
         <Card>
@@ -105,7 +116,7 @@ export default async function InventoryItemPage({
                   <div>
                     <p className="font-medium">{sl.location.name}</p>
                     <p className="text-sm text-muted-foreground">
-                      {Number(sl.quantity)} {item.unit.toLowerCase()}
+                      {Number(sl.quantity)} {formatUnit(item)}
                     </p>
                   </div>
                   <ItemStockActions

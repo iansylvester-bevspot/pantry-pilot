@@ -15,6 +15,8 @@ export const inventoryItemSchema = z.object({
   description: z.string().optional(),
   categoryId: z.string().optional(),
   unit: z.string().default("EACH"),
+  packSize: z.coerce.number().int().min(1).optional(),
+  packUnit: z.string().optional(),
   unitCost: z.coerce.number().min(0, "Cost must be 0 or more"),
   parLevel: z.coerce.number().min(0, "Par level must be 0 or more"),
   maxLevel: z.coerce.number().min(0).optional(),
