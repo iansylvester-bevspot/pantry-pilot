@@ -1,5 +1,6 @@
 import { getCategoryTree } from "@/actions/categories";
 import { CategoryTreeManager } from "@/components/categories/category-tree-manager";
+import { CategoriesWizard } from "@/components/categories/categories-wizard";
 import { Layers } from "lucide-react";
 
 export default async function CategoriesPage() {
@@ -16,6 +17,7 @@ export default async function CategoriesPage() {
           Manage your product categories, subcategories, and GL codes
         </p>
       </div>
+      <CategoriesWizard tree={tree} />
       <CategoryTreeManager tree={tree} />
     </div>
   );
