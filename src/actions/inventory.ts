@@ -17,7 +17,7 @@ export async function getInventoryItems(locationId?: string) {
   return prisma.inventoryItem.findMany({
     where: locationId ? { locationId } : undefined,
     include: {
-      category: true,
+      category: { include: { parent: { include: { parent: true } } } },
       stockLevels: true,
     },
     orderBy: { name: "asc" },
@@ -28,7 +28,7 @@ export async function getInventoryItem(id: string) {
   return prisma.inventoryItem.findUnique({
     where: { id },
     include: {
-      category: true,
+      category: { include: { parent: { include: { parent: true } } } },
       stockLevels: { include: { location: true } },
       supplierItems: { include: { supplier: true } },
       priceHistory: { orderBy: { changedAt: "desc" }, take: 10 },
@@ -54,12 +54,24 @@ export async function createInventoryItem(
       storageTemp: formData.get("storageTemp") || undefined,
       shelfLifeDays: formData.get("shelfLifeDays") || undefined,
       notes: formData.get("notes") || undefined,
+      glCode: formData.get("glCode") || undefined,
       locationId: formData.get("locationId"),
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
     if (!validated.success) {
       return { success: false, error: validated.error.issues[0].message };
+    }
+
+    // Prevent assigning items to SUPER categories
+    const targetCategory = await prisma.category.findUnique({
+      where: { id: validated.data.categoryId },
+    });
+    if (targetCategory?.type === "SUPER") {
+      return {
+        success: false,
+        error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
+      };
     }
 
     const item = await prisma.$transaction(async (tx) => {
@@ -76,6 +88,7 @@ export async function createInventoryItem(
           storageTemp: validated.data.storageTemp,
           shelfLifeDays: validated.data.shelfLifeDays,
           notes: validated.data.notes,
+          glCode: validated.data.glCode,
           locationId: validated.data.locationId,
         },
       });
@@ -118,12 +131,24 @@ export async function updateInventoryItem(
       storageTemp: formData.get("storageTemp") || undefined,
       shelfLifeDays: formData.get("shelfLifeDays") || undefined,
       notes: formData.get("notes") || undefined,
+      glCode: formData.get("glCode") || undefined,
       locationId: formData.get("locationId"),
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
     if (!validated.success) {
       return { success: false, error: validated.error.issues[0].message };
+    }
+
+    // Prevent assigning items to SUPER categories
+    const targetCategory = await prisma.category.findUnique({
+      where: { id: validated.data.categoryId },
+    });
+    if (targetCategory?.type === "SUPER") {
+      return {
+        success: false,
+        error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
+      };
     }
 
     const existing = await prisma.inventoryItem.findUnique({ where: { id } });
@@ -159,6 +184,7 @@ export async function updateInventoryItem(
           storageTemp: validated.data.storageTemp,
           shelfLifeDays: validated.data.shelfLifeDays,
           notes: validated.data.notes,
+          glCode: validated.data.glCode,
         },
       });
     });

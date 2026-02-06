@@ -33,7 +33,10 @@ export async function getDashboardStats() {
   // Low stock items
   const items = await prisma.inventoryItem.findMany({
     where: { isActive: true },
-    include: { stockLevels: true, category: true },
+    include: {
+      stockLevels: true,
+      category: { include: { parent: { include: { parent: true } } } },
+    },
   });
 
   const lowStockItems = items.filter((item) => {
@@ -50,7 +53,13 @@ export async function getDashboardStats() {
     lowStockItems: lowStockItems.map((item) => ({
       id: item.id,
       name: item.name,
-      category: item.category.name,
+      category: [
+        item.category.parent?.parent?.name,
+        item.category.parent?.name,
+        item.category.name,
+      ]
+        .filter(Boolean)
+        .join(" > "),
       totalStock: item.stockLevels.reduce((sum, sl) => sum + Number(sl.quantity), 0),
       parLevel: Number(item.parLevel),
       unit: item.unit,
