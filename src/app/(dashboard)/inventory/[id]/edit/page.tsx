@@ -43,6 +43,12 @@ export default async function EditInventoryItemPage({
           notes: item.notes,
           glCode: item.glCode,
           locationId: item.locationId,
+          vintage: item.vintage,
+          binNumber: item.binNumber,
+          varietal: item.varietal,
+          region: item.region,
+          producer: item.producer,
+          abv: item.abv ? Number(item.abv) : null,
         }}
       />
     </div>

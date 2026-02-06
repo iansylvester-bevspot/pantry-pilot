@@ -217,6 +217,13 @@ model InventoryItem {
   notes         String?
   glCode        String?
   locationId    String
+  // Wine-specific fields
+  vintage       Int?
+  binNumber     String?
+  varietal      String?
+  region        String?
+  producer      String?
+  abv           Decimal? @db.Decimal(4, 1)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

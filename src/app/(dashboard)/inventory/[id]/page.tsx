@@ -195,6 +195,54 @@ export default async function InventoryItemPage({
           </Card>
         )}
       </div>
+
+      {(item.vintage || item.producer || item.varietal || item.region || item.binNumber || item.abv) && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Wine Details</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+              {item.producer && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Producer</p>
+                  <p className="font-medium">{item.producer}</p>
+                </div>
+              )}
+              {item.varietal && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Varietal</p>
+                  <p className="font-medium">{item.varietal}</p>
+                </div>
+              )}
+              {item.vintage && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Vintage</p>
+                  <p className="font-medium">{item.vintage}</p>
+                </div>
+              )}
+              {item.region && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Region</p>
+                  <p className="font-medium">{item.region}</p>
+                </div>
+              )}
+              {item.binNumber && (
+                <div>
+                  <p className="text-sm text-muted-foreground">Bin Number</p>
+                  <p className="font-medium">{item.binNumber}</p>
+                </div>
+              )}
+              {item.abv && (
+                <div>
+                  <p className="text-sm text-muted-foreground">ABV</p>
+                  <p className="font-medium">{Number(item.abv)}%</p>
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 }

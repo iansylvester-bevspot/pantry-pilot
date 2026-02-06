@@ -46,7 +46,7 @@ export async function createInventoryItem(
       name: formData.get("name"),
       sku: formData.get("sku") || undefined,
       description: formData.get("description") || undefined,
-      categoryId: formData.get("categoryId"),
+      categoryId: formData.get("categoryId") || undefined,
       unit: formData.get("unit"),
       unitCost: formData.get("unitCost"),
       parLevel: formData.get("parLevel"),
@@ -56,6 +56,12 @@ export async function createInventoryItem(
       notes: formData.get("notes") || undefined,
       glCode: formData.get("glCode") || undefined,
       locationId: formData.get("locationId"),
+      vintage: formData.get("vintage") || undefined,
+      binNumber: formData.get("binNumber") || undefined,
+      varietal: formData.get("varietal") || undefined,
+      region: formData.get("region") || undefined,
+      producer: formData.get("producer") || undefined,
+      abv: formData.get("abv") || undefined,
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
@@ -64,14 +70,16 @@ export async function createInventoryItem(
     }
 
     // Prevent assigning items to SUPER categories
-    const targetCategory = await prisma.category.findUnique({
-      where: { id: validated.data.categoryId },
-    });
-    if (targetCategory?.type === "SUPER") {
-      return {
-        success: false,
-        error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
-      };
+    if (validated.data.categoryId) {
+      const targetCategory = await prisma.category.findUnique({
+        where: { id: validated.data.categoryId },
+      });
+      if (targetCategory?.type === "SUPER") {
+        return {
+          success: false,
+          error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
+        };
+      }
     }
 
     const item = await prisma.$transaction(async (tx) => {
@@ -80,7 +88,7 @@ export async function createInventoryItem(
           name: validated.data.name,
           sku: validated.data.sku,
           description: validated.data.description,
-          categoryId: validated.data.categoryId,
+          categoryId: validated.data.categoryId || null,
           unit: validated.data.unit as UnitType,
           unitCost: validated.data.unitCost,
           parLevel: validated.data.parLevel,
@@ -90,6 +98,12 @@ export async function createInventoryItem(
           notes: validated.data.notes,
           glCode: validated.data.glCode,
           locationId: validated.data.locationId,
+          vintage: validated.data.vintage,
+          binNumber: validated.data.binNumber,
+          varietal: validated.data.varietal,
+          region: validated.data.region,
+          producer: validated.data.producer,
+          abv: validated.data.abv,
         },
       });
 
@@ -123,7 +137,7 @@ export async function updateInventoryItem(
       name: formData.get("name"),
       sku: formData.get("sku") || undefined,
       description: formData.get("description") || undefined,
-      categoryId: formData.get("categoryId"),
+      categoryId: formData.get("categoryId") || undefined,
       unit: formData.get("unit"),
       unitCost: formData.get("unitCost"),
       parLevel: formData.get("parLevel"),
@@ -133,6 +147,12 @@ export async function updateInventoryItem(
       notes: formData.get("notes") || undefined,
       glCode: formData.get("glCode") || undefined,
       locationId: formData.get("locationId"),
+      vintage: formData.get("vintage") || undefined,
+      binNumber: formData.get("binNumber") || undefined,
+      varietal: formData.get("varietal") || undefined,
+      region: formData.get("region") || undefined,
+      producer: formData.get("producer") || undefined,
+      abv: formData.get("abv") || undefined,
     };
 
     const validated = inventoryItemSchema.safeParse(raw);
@@ -141,14 +161,16 @@ export async function updateInventoryItem(
     }
 
     // Prevent assigning items to SUPER categories
-    const targetCategory = await prisma.category.findUnique({
-      where: { id: validated.data.categoryId },
-    });
-    if (targetCategory?.type === "SUPER") {
-      return {
-        success: false,
-        error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
-      };
+    if (validated.data.categoryId) {
+      const targetCategory = await prisma.category.findUnique({
+        where: { id: validated.data.categoryId },
+      });
+      if (targetCategory?.type === "SUPER") {
+        return {
+          success: false,
+          error: "Items cannot be assigned to a super category. Choose a category or subcategory.",
+        };
+      }
     }
 
     const existing = await prisma.inventoryItem.findUnique({ where: { id } });
@@ -176,7 +198,7 @@ export async function updateInventoryItem(
           name: validated.data.name,
           sku: validated.data.sku,
           description: validated.data.description,
-          categoryId: validated.data.categoryId,
+          categoryId: validated.data.categoryId || null,
           unit: validated.data.unit as UnitType,
           unitCost: validated.data.unitCost,
           parLevel: validated.data.parLevel,
@@ -185,6 +207,12 @@ export async function updateInventoryItem(
           shelfLifeDays: validated.data.shelfLifeDays,
           notes: validated.data.notes,
           glCode: validated.data.glCode,
+          vintage: validated.data.vintage,
+          binNumber: validated.data.binNumber,
+          varietal: validated.data.varietal,
+          region: validated.data.region,
+          producer: validated.data.producer,
+          abv: validated.data.abv,
         },
       });
     });

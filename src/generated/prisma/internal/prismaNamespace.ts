@@ -1838,6 +1838,12 @@ export const InventoryItemScalarFieldEnum = {
   notes: 'notes',
   glCode: 'glCode',
   locationId: 'locationId',
+  vintage: 'vintage',
+  binNumber: 'binNumber',
+  varietal: 'varietal',
+  region: 'region',
+  producer: 'producer',
+  abv: 'abv',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

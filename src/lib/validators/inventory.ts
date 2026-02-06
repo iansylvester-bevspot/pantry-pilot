@@ -13,7 +13,7 @@ export const inventoryItemSchema = z.object({
   name: z.string().min(1, "Name is required"),
   sku: z.string().optional(),
   description: z.string().optional(),
-  categoryId: z.string().min(1, "Category is required"),
+  categoryId: z.string().optional(),
   unit: z.string().default("EACH"),
   unitCost: z.coerce.number().min(0, "Cost must be 0 or more"),
   parLevel: z.coerce.number().min(0, "Par level must be 0 or more"),
@@ -23,6 +23,13 @@ export const inventoryItemSchema = z.object({
   notes: z.string().optional(),
   glCode: z.string().optional(),
   locationId: z.string().min(1, "Location is required"),
+  // Wine-specific fields
+  vintage: z.coerce.number().int().min(1900).max(2100).optional(),
+  binNumber: z.string().optional(),
+  varietal: z.string().optional(),
+  region: z.string().optional(),
+  producer: z.string().optional(),
+  abv: z.coerce.number().min(0).max(100).optional(),
 });
 
 export const stockAdjustmentSchema = z.object({
